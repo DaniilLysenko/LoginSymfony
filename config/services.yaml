@@ -1,0 +1,22 @@
+parameters:
+    locale: 'en'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    auth_success_handler:
+        class: 'App\Security\Authentication\Handler\AuthSuccessHandler'
+
+    auth_failure_handler:
+        class: 'App\Security\Authentication\Handler\AuthFailureHandler'
