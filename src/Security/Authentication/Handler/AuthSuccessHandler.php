@@ -22,7 +22,7 @@ class AuthSuccessHandler implements AuthenticationSuccessHandlerInterface, Conta
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         $em = $this->container->get('doctrine')->getManager()->getRepository(User::class);
-        $user = $em->findOneBy(['username' => 'daniil']);
+        $user = $em->findOneBy(['username' => $request->get('_username')]);
         $user->setSuccessLogin(time());
         $this->container->get('doctrine')->getManager()->flush();
         return new JsonResponse(['success' => 'OK'], 200);

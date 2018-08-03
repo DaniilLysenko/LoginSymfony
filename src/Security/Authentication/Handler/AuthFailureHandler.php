@@ -22,9 +22,11 @@ class AuthFailureHandler implements AuthenticationFailureHandlerInterface, Conta
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $em = $this->container->get('doctrine')->getManager()->getRepository(User::class);
-        $user = $em->findOneBy(['username' => 'daniil']);
-        $user->addFailedLogins(time());
-        $this->container->get('doctrine')->getManager()->flush();
+        $user = $em->findOneBy(['username' => $request->get('_username')]);
+        if ($user) {
+            $user->addFailedLogins(time());
+            $this->container->get('doctrine')->getManager()->flush();
+        }
         return new JsonResponse(['err' => $exception->getMessage()], 404);
     }
 
