@@ -109,7 +109,6 @@ class User implements AdvancedUserInterface
 
     public function clearFailedLogins()
     {
-//        unset($this->failedLogins[0]);
         foreach ($this->failedLogins as $key => $fail) {
             if ($fail < (time() - 30)) {
                 unset($this->failedLogins[$key]);
