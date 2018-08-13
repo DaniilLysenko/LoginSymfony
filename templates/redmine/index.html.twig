@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+
+    <link rel="stylesheet" href="{{ asset('css/main2.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/print.css') }}">
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="invoice_wrapper">
+            <div class="invoice_title">Invoice/Інвойс №1</div>
+            <br>
+            <div>
+                <table class="invoice_table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Description/Опис</th>
+                            <th>Quantity/<br/>Кількість</th>
+                            <th>Price, &ltкод валюти <br/>напр.: USD&gtЦіна, <br/>&ltвалюта&gt</th>
+                            <th>Amount, &ltкод валюти <br/> напр.: USD&gt /Сума, <br/>&ltвалюта&gt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ task.issue }}</td>
+                                <td>{{ task.count }}</td>
+                                <td>{{ task.price }}</td>
+                                <td>{{ task.count * task.price }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total/Усього:</td>
+                            <td>{{ total }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="4">Total to pay/ {{ total }}</td>
+                                    </tr>
+                                    <tr><td>Усього до сплати: {{ total }}</td><td></td></tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="invoice-notes">
+                    Pay within 90 days/Сплатити протягом 90 днів <br/>
+                    All charges of correspondent banks are at the Supplier’s expenses/ <br/>
+                    Усі комісії банків-кореспондентів сплачує Виконавець.<br/>
+                    Please note, that payment according to this invoice at the same time is the confirmation of performed works, delivered services and final mutual installments between Parties without any additional documents. Also it is to acknowledge that Parties have no claims to each other. <br/>
+                    Оплата згідно цього Інвойсу одночасно є підтвердженням виконаних робіт, наданих послуг, кінцевих розрахунків між Сторонами і того, що Сторони не мають взаємних претензій, і не вимагає підписання додаткових документів.
+                </div>
+            </div>
+            <br/>
+            <div class="signature_wrapper"><div class="name pr">Supplier/Виконавець:</div><div class="signature_line pr">
+                <span class="pr initials">({{ performer.firstname ~ ' ' ~ performer.lastname }})</span>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
